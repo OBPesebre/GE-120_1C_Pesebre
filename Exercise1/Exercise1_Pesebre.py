@@ -1,6 +1,8 @@
 """
 GE 120
 Omar Pesebre
+2023-06343
+Exercise 1
 """
 
 dms = 118.42069
@@ -8,16 +10,16 @@ dms = 118.42069
 # get the degree part
 degree = int(dms)
 
-print("DEGREE:", degree)
+#print("DEGREE:", degree)
 
 # get the minutes
 minutes = (dms - degree) * 60
 minutes_fractional = int(minutes)
-print("MINUTES", minutes)
+#print("MINUTES", minutes)
 
 # get the seconds
 seconds = (minutes - minutes_fractional) * 60
-print("SECONDS", seconds)
+#print("SECONDS", seconds)
 
 print("DMS: " + str(degree) + "-" + str(minutes_fractional) + "-" + str(round(seconds,2)))
 
@@ -26,7 +28,7 @@ print("DMS: " + str(degree) + "-" + str(minutes_fractional) + "-" + str(round(se
 dms = "118-25-14.48"
 values = dms.split("-")
 
-print("list: ", values)
+#print("list: ", values)
 
 degrees = int(values[0])
 minutes = int(values[1])
