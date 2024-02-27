@@ -20,7 +20,8 @@ seconds = (minutes - minutes_fractional) * 60
 print("SECONDS", seconds)
 
 print("DMS: " + str(degree) + "-" + str(minutes_fractional) + "-" + str(round(seconds,2)))
-#
+
+# convert dms to dd
 
 dms = "118-25-14.48"
 values = dms.split("-")
