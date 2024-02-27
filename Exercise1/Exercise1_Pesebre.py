@@ -30,10 +30,16 @@ values = dms.split("-")
 
 #print("list: ", values)
 
+#get the degrees
 degrees = int(values[0])
+
+#get the minutes
 minutes = int(values[1])
+
+#get the seconds
 seconds = float(values[2])
 
+#combine degrees, minutes, and seconds
 dd = degrees + (minutes/60) + (seconds/3600)
 
 print("Converted to DD: ", round(dd,5))
