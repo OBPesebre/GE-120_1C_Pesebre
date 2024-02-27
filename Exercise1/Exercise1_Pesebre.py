@@ -5,15 +5,15 @@ Omar Pesebre
 Exercise 1
 """
 
-dms = 118.42069
+dd = float(input("Provide the dd: "))
 
 # get the degree part
-degree = int(dms)
+degree = int(dd)
 
 #print("DEGREE:", degree)
 
 # get the minutes
-minutes = (dms - degree) * 60
+minutes = (dd - degree) * 60
 minutes_fractional = int(minutes)
 #print("MINUTES", minutes)
 
@@ -25,7 +25,7 @@ print("DMS: " + str(degree) + "-" + str(minutes_fractional) + "-" + str(round(se
 
 # convert dms to dd
 
-dms = "118-25-14.48"
+dms = (input("Provide the dms: "))
 values = dms.split("-")
 
 #print("list: ", values)
