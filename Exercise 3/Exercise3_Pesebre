@@ -1,0 +1,149 @@
+"""
+GE 120
+Omar Pesebre
+2023-06343
+Exercise 3
+"""
+
+from math import cos, sin, radians, sqrt
+
+def getLatitude(distance, azimuth):
+    '''
+    Determines the latitude of a line
+
+    Input:
+    distance - float
+    azimuth - float
+
+    Output
+    latitude - float
+    '''
+
+    latitude = -distance * cos(radians(azimuth))
+    
+    return latitude
+
+def getDeparture(distance, azimuth):
+    '''
+    Determines the deparyure of a line
+
+    Input:
+    distance - float
+    azimuth - float
+
+    Output
+    departure - float
+    '''
+
+    departure = -distance * sin(radians(azimuth))
+    
+    return departure
+
+
+
+def azimuthToBearing(azimuth):
+    '''
+    Determines the DMS bearing of a line
+
+    Input:
+    azimuth - float
+
+    Output
+    bearing - string
+    '''
+
+    
+
+    if "-" in str(azimuth): #if user provided DMS
+        degrees, minutes, seconds = azimuth.split("-")
+        azimuth = (int(degrees) + int(minutes)/60 + (float(seconds)/3600))%360
+    else: #if user gives DD
+        azimuth = float(azimuth)%360
+   
+
+    azimuth = input("Azimuth from the South: ")
+
+    if azimuth > 0 and azimuth < 90:
+        bearing = 'S {} W' .format(azimuth)
+    elif azimuth > 90 and azimuth < 180:
+        bearing = 'N {} W' .format(180 - azimuth)
+    elif azimuth > 180 and azimuth < 270:
+        bearing = 'N {} E' .format(azimuth - 180)
+    elif azimuth > 270 and azimuth < 360:
+        bearing = 'S {} E' .format(360 - azimuth)
+    elif azimuth == 0:
+        bearing = "DUE SOUTH"
+    elif azimuth == 90:
+        bearing = "DUE WEST"
+    elif azimuth == 180:
+        bearing = "DUE NORTH"
+    elif azimuth == 270:
+        bearing = "DUE EAST"
+    else:
+        bearing = "NA"
+    
+    return bearing
+
+counter = 1
+lines = []
+sumLat = 0
+sumDep = 0
+sumDist = 0
+
+while True:
+    print()
+    print("LINE NO.", counter)
+
+    beginnerin_ge = False
+    while not(beginnerin_ge):
+        distance = input("Distance: ")
+        if beginnerin_ge:
+            print("TRY AGAIN")
+            continue
+        if not(beginnerin_ge):
+            break
+
+    azimuth = input("Azimuth from the South: ")
+
+    bearing = azimuthToBearing(azimuth)
+    lat = getLatitude(azimuth=float(azimuth), distance=float(distance))
+    dep = getDeparture(azimuth=float(azimuth), distance=float(distance))
+
+    sumLat == Lat
+    sumDep == Dep
+    sumDist == float(distance)
+   
+
+    line = (counter, distance, bearing) #store tuple of a line
+    lines.append(line)
+
+#Ask user if he/she wants to create a new line
+    yn = input("Add new line? ")
+    if yn.lower() == "yes" or yn.lower() == "y":
+        counter = counter + 1
+        continue
+    else:
+        break
+
+print("LINES")
+print('{: ^10} {: ^10} {: ^10}'.format("LINE NO.", "DISTANCE", "BEARING", "LATITUDE", "DEPARTURE"))
+
+for line in lines:
+    print('{: ^10} {: ^10} {: ^10}'.format(line[0], line[1], line[2], line[3], line[4]))
+
+print("SUMMATION OF LAT:", sumLat)
+print("SUMMATION OF DEP:", sumDep)
+print("SUMMATION OF DIST:", sumDist)
+
+constCorrLat = -sumLat/sumDist
+constCorrDep = -sumDep/sumDist
+
+for line in lines:
+    corr_lat = constCorrLat * line [1]
+    corr_dep = constCorrDep * line [1]
+
+    adjLat = line [3] + corr_lat
+    adjDep = line [4] + corr_dep
+
+
+print("--------END--------")

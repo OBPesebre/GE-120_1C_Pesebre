@@ -26,7 +26,7 @@ while True:
 
     if "-" in azimuth:
         degrees, minutes, seconds = azimuth.split("-")
-        azimuth = (int(degrees) + int(minutes)/60 + (float(seconds)/3600))
+        azimuth = (int(degrees) + int(minutes)/60 + (float(seconds)/3600))%360
         azimuth = round(azimuth,5)
     else:
         azimuth = float(azimuth)%360
