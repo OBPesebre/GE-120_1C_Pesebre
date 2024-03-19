@@ -5,7 +5,7 @@ Omar Pesebre
 Exercise 3
 """
 
-from math import cos, sin, radians, sqrt
+from math import cos, sin, radians, sqrt, atan, floor
 
 def getLatitude(distance, azimuth):
     '''
@@ -19,13 +19,13 @@ def getLatitude(distance, azimuth):
     latitude - float
     '''
 
-    latitude = -distance * cos(radians(azimuth))
+    latitude = (-distance * cos(radians(azimuth)))
     
     return latitude
 
 def getDeparture(distance, azimuth):
     '''
-    Determines the deparyure of a line
+    Determines the departure of a line
 
     Input:
     distance - float
@@ -52,16 +52,13 @@ def azimuthToBearing(azimuth):
     bearing - string
     '''
 
-    
 
     if "-" in str(azimuth): #if user provided DMS
         degrees, minutes, seconds = azimuth.split("-")
-        azimuth = (int(degrees) + int(minutes)/60 + (float(seconds)/3600))%360
+        azimuth = (int(degrees)) + (int(minutes)/60) + (float(seconds)/3600)%360
     else: #if user gives DD
         azimuth = float(azimuth)%360
    
-
-    azimuth = input("Azimuth from the South: ")
 
     if azimuth > 0 and azimuth < 90:
         bearing = 'S {} W' .format(azimuth)
@@ -96,7 +93,7 @@ while True:
 
     beginnerin_ge = False
     while not(beginnerin_ge):
-        distance = input("Distance: ")
+        distance = float(input("Distance: "))
         if beginnerin_ge:
             print("TRY AGAIN")
             continue
@@ -108,13 +105,12 @@ while True:
     bearing = azimuthToBearing(azimuth)
     lat = getLatitude(azimuth=float(azimuth), distance=float(distance))
     dep = getDeparture(azimuth=float(azimuth), distance=float(distance))
-
-    sumLat == Lat
-    sumDep == Dep
-    sumDist == float(distance)
    
+    sumLat += lat
+    sumDep += dep
+    sumDist += float(distance)
 
-    line = (counter, distance, bearing) #store tuple of a line
+    line = (counter, distance, bearing, lat, dep) #store tuple of a line
     lines.append(line)
 
 #Ask user if he/she wants to create a new line
@@ -126,14 +122,64 @@ while True:
         break
 
 print("LINES")
-print('{: ^10} {: ^10} {: ^10}'.format("LINE NO.", "DISTANCE", "BEARING", "LATITUDE", "DEPARTURE"))
+print('{: ^10} {: ^10} {: ^10} {: ^10} {: ^10}'.format("LINE NO.", "DISTANCE", "BEARING", "LATITUDE", "DEPARTURE"))
 
 for line in lines:
-    print('{: ^10} {: ^10} {: ^10}'.format(line[0], line[1], line[2], line[3], line[4]))
+    print('{: ^10} {: ^10} {: ^10} {: ^10} {: ^10}'.format(line[0], line[1], line[2], line[3], line[4]))
+
+
+#get the sum of lat, dep, and distance
 
 print("SUMMATION OF LAT:", sumLat)
 print("SUMMATION OF DEP:", sumDep)
 print("SUMMATION OF DIST:", sumDist)
+
+#get the LEC, REC, BOSE
+lec = sqrt((sumLat ** 2) + (sumDep ** 2))
+print("LEC:", lec)
+
+rec_denominator = (sumDist/lec)
+
+def round_down_rec(rec_denominator):
+    '''
+    This function rounds down REC.
+
+    Input:
+    denominator of rec = float
+
+    Output:
+    Rounded down rec = float
+
+    '''
+
+    rec_denominator_str = str(rec_denominator)
+
+    if len(rec_denominator_str) == 1:
+        return rec_denominator
+    elif len(rec_denominator_str) == 2:
+        return rec_denominator
+    else:
+        return int(rec_denominator_str[:2] + "0" * (len(rec_denominator_str) - 2))
+
+print("REC: 1:", round_down_rec(rec_denominator))
+
+BOSE = float(atan(abs(sumDep)/abs(sumLat)))
+
+if sumLat > 0 and sumDep > 0:
+    boSe = 'S {} W' .format(BOSE)
+elif sumLat < 0 and sumDep > 0:
+    boSe = 'N {} W' .format(BOSE)
+elif sumLat < 0 and sumDep < 0:
+    boSe = 'N {} E' .format(BOSE)
+elif sumLat > 0 and sumDep < 0:
+    boSe = 'S {} E' .format(BOSE)
+else:
+    boSe = "NA"
+
+
+print("BoSE:", boSe)
+
+#get the cLat, cDep, adjLat, adjDep
 
 constCorrLat = -sumLat/sumDist
 constCorrDep = -sumDep/sumDist
@@ -144,6 +190,32 @@ for line in lines:
 
     adjLat = line [3] + corr_lat
     adjDep = line [4] + corr_dep
+
+print('{: ^10} {: ^10} {: ^10}'.format("LINE NO."," ADJUSTED LATITUDE", "ADJUSTED DEPARTURE"))
+
+for line in lines:
+    print('{: ^10} {: ^10} {: ^10}'.format(line[0], adjLat, adjDep))
+
+#Obtain the adjusted distance and bearing
+adjDist = sqrt((adjLat ** 2) + (adjDep ** 2))
+adj_bearing = float(atan(abs(adjDep)/abs(adjLat)))
+
+if adjLat > 0 and adjDep > 0:
+    adjBearing = 'N {} E' .format(adj_bearing)
+elif adjLat < 0 and adjDep > 0:
+    adjBearing = 'S {} E' .format(adj_bearing)
+elif adjLat < 0 and adjDep < 0:
+    adjBearing = 'S {} W' .format(adj_bearing)
+elif adjLat > 0 and adjDep < 0:
+    adjBearing = 'N {} W' .format(adj_bearing)
+else:
+    adjBearing = "NA"
+
+print("ADJUSTED LINES")
+print('{: ^10} {: ^10} {: ^10}'.format("LINE NO."," ADJUSTED DISTANCE", "ADJUSTED BEARING"))
+
+for line in lines:
+    print('{: ^10} {: ^10} {: ^10}'.format(line[0], adjDist, adjBearing))
 
 
 print("--------END--------")
