@@ -1,0 +1,18 @@
+adjDist = sqrt((adjLat ** 2) + (adjDep ** 2))
+# adj_bearing = float(atan(abs(adjDep)/abs(adjLat)))
+
+# if adjLat > 0 and adjDep > 0:
+#     adjBearing = 'N {} E' .format(adj_bearing)
+# elif adjLat < 0 and adjDep > 0:
+#     adjBearing = 'S {} E' .format(adj_bearing)
+# elif adjLat < 0 and adjDep < 0:
+#     adjBearing = 'S {} W' .format(adj_bearing)
+# elif adjLat > 0 and adjDep < 0:
+#     adjBearing = 'N {} W' .format(adj_bearing)
+# else:
+#     adjBearing = "NA"
+
+
+
+# for line in lines:
+#     print('{: ^10} {: ^10} {: ^10}'.format(line[0], adjDist, adjBearing))
